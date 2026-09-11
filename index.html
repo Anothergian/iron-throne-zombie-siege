@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090b0c" />
+  <title>Iron Throne: Zombie Siege</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+<body>
+  <div id="loading">
+    <div class="sigil">♜</div>
+    <h1>IRON THRONE</h1>
+    <p>Die Burg erwacht …</p>
+  </div>
+
+  <canvas id="game"></canvas>
+
+  <header id="hud">
+    <section class="brand">
+      <span class="crest">♜</span>
+      <div><strong>IRON THRONE</strong><small>ZOMBIE SIEGE</small></div>
+    </section>
+    <section class="wave-panel">
+      <small>WELLE</small><strong id="waveText">1</strong>
+      <div class="enemy-count"><span class="skull">☠</span><span id="enemyText">0 / 0</span></div>
+    </section>
+    <section class="cash-panel"><small>KRONEN</small><strong><span class="coin">◆</span> <span id="cashText">0</span></strong></section>
+  </header>
+
+  <aside id="stats">
+    <div class="meter-row"><span class="icon health-icon">✚</span><div class="meter"><i id="healthBar"></i></div><b id="healthText">100 / 100</b></div>
+    <div class="meter-row"><span class="icon armor-icon">⬟</span><div class="meter armor"><i id="armorBar"></i></div><b id="armorText">25 / 25</b></div>
+  </aside>
+
+  <div id="weaponHud">
+    <span class="crosshair-icon">⌖</span>
+    <div><small>RUNENWERFER</small><strong id="damageText">SCHADEN 20</strong></div>
+  </div>
+
+  <div id="controls">
+    <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>FAHREN</span></div>
+    <div><kbd>MAUS</kbd><span>ZIELEN</span></div>
+    <div><kbd>◀</kbd><span>FEUERN</span></div>
+  </div>
+
+  <div id="mobileControls" aria-label="Touch-Steuerung">
+    <div class="touch-zone move-zone" id="moveStick">
+      <div class="stick-ring"><div class="stick-knob"></div></div>
+      <span>FAHREN</span>
+    </div>
+    <div class="touch-zone aim-zone" id="aimStick">
+      <div class="stick-ring"><div class="stick-knob"><b>⌖</b></div></div>
+      <span>ZIELEN &amp; FEUERN</span>
+    </div>
+  </div>
+
+  <div id="announcement" class="hidden"><small id="announceTop">WELLE 1</small><strong id="announceMain">DIE TOTEN ERWACHEN</strong></div>
+
+  <div id="shop" class="overlay hidden">
+    <div class="shop-card">
+      <div class="shop-heading">
+        <span class="crest big">♜</span>
+        <div><small>VERSORGUNGSPAUSE</small><h2>SCHMIEDE DER BURG</h2><p>Rüste deinen Kampfthron für die nächste Welle.</p></div>
+        <div class="shop-cash"><small>DEINE KRONEN</small><strong><span class="coin">◆</span> <span id="shopCash">0</span></strong></div>
+      </div>
+      <div id="upgradeGrid" class="upgrade-grid"></div>
+      <div class="shop-footer">
+        <div><span id="nextWaveHint">Nächste Welle: 2</span><small id="nextEnemiesHint">Mehr und stärkere Gegner erwarten dich.</small></div>
+        <button id="nextWaveButton">NÄCHSTE WELLE <span>➜</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="start" class="overlay">
+    <div class="start-card">
+      <div class="eyebrow">EINE BURG. EIN STUHL. KEINE GNADE.</div>
+      <h1>IRON<br><em>THRONE</em></h1>
+      <p>Verteidige den verfluchten Burghof gegen endlose Wellen der Untoten. Verdiene Kronen, verstärke deinen Rollstuhl und überlebe.</p>
+      <div class="enemy-legend">
+        <span><i class="normal"></i>Schlurfer</span><span><i class="runner"></i>Flitzer</span><span><i class="giant"></i>Riese</span><span><i class="thrower"></i>Werfer</span>
+      </div>
+      <button id="startButton">SCHLACHT BEGINNEN <span>➜</span></button>
+      <small class="desktop-help">WASD bewegen · Maus zielen · Linksklick halten zum Feuern</small>
+      <small class="touch-help">Linker Stick: fahren · Rechter Stick: zielen und feuern</small>
+    </div>
+  </div>
+
+  <div id="gameOver" class="overlay hidden">
+    <div class="start-card game-over-card">
+      <div class="eyebrow">DER THRON IST GEFALLEN</div>
+      <h1>GAME<br><em>OVER</em></h1>
+      <p id="finalStats">Du hast 0 Wellen überlebt.</p>
+      <button id="restartButton">NOCH EIN VERSUCH <span>↻</span></button>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+#mobileControls {
+  display: none;
+  position: fixed;
+  z-index: 18;
+  inset: 0;
+  pointer-events: none;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.touch-zone {
+  position: absolute;
+  bottom: max(22px, env(safe-area-inset-bottom));
+  width: 150px;
+  height: 150px;
+  pointer-events: auto;
+  touch-action: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.move-zone { left: max(16px, env(safe-area-inset-left)); }
+.aim-zone { right: max(16px, env(safe-area-inset-right)); }
+
+.stick-ring {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  border: 2px solid rgba(230, 184, 87, .44);
+  background: radial-gradient(circle, rgba(23, 28, 27, .45), rgba(5, 7, 7, .68));
+  box-shadow: inset 0 0 26px rgba(0, 0, 0, .7), 0 5px 25px rgba(0, 0, 0, .3);
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.stick-ring::before, .stick-ring::after {
+  content: "";
+  position: absolute;
+  background: rgba(230, 184, 87, .16);
+}
+.stick-ring::before { width: 76%; height: 1px; }
+.stick-ring::after { height: 76%; width: 1px; }
+
+.stick-knob {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #58605b, #1c211f 70%);
+  border: 2px solid rgba(238, 209, 142, .62);
+  box-shadow: 0 5px 16px rgba(0, 0, 0, .7), inset 0 1px rgba(255, 255, 255, .18);
+  display: grid;
+  place-items: center;
+  position: relative;
+  z-index: 2;
+  will-change: transform;
+}
+
+.stick-knob b { font: 400 24px Cinzel; color: var(--gold2); text-shadow: 0 0 10px rgba(230, 184, 87, .7); }
+.touch-zone > span { position: absolute; bottom: 0; color: rgba(235, 225, 202, .62); font: 700 8px Inter; letter-spacing: .18em; }
+.touch-zone.active .stick-ring { border-color: rgba(255, 214, 118, .9); box-shadow: inset 0 0 28px rgba(0,0,0,.75), 0 0 24px rgba(230,184,87,.22); }
+.touch-zone.active .stick-knob { border-color: #ffd978; box-shadow: 0 4px 16px #000, 0 0 17px rgba(230,184,87,.5); }
+.touch-help { display: none !important; }
+
+@media (max-width: 900px), (pointer: coarse) {
+  #mobileControls { display: block; }
+  #controls { display: none; }
+  .desktop-help { display: none !important; }
+  .touch-help { display: block !important; }
+  #stats { left: 14px; bottom: 178px; width: 180px; }
+  #weaponHud { right: 16px; bottom: 181px; }
+  .crosshair-icon { font-size: 28px; }
+  #weaponHud strong { font-size: 10px; }
+}
+
+@media (max-width: 760px) {
+  #hud { height: 62px; }
+  .wave-panel { padding: 8px 9px; gap: 7px; }
+  .wave-panel > strong { font-size: 21px; }
+  .enemy-count { padding-left: 7px; font-size: 9px; }
+  #stats { left: 14px; bottom: 168px; width: 165px; }
+  #weaponHud { right: 14px; bottom: 171px; }
+  .touch-zone { width: 132px; height: 140px; }
+  .stick-ring { width: 94px; height: 94px; }
+  .stick-knob { width: 48px; height: 48px; }
+  .start-card { padding: 32px 22px; }
+  .start-card h1 { font-size: 42px; }
+  .start-card p { font-size: 11px; }
+}
+
+@media (max-height: 520px) and (pointer: coarse) {
+  .touch-zone { bottom: 8px; height: 122px; }
+  .stick-ring { width: 86px; height: 86px; }
+  .stick-knob { width: 44px; height: 44px; }
+  #stats { bottom: auto; top: 64px; width: 150px; }
+  #weaponHud { bottom: auto; top: 68px; }
+  .start-card { padding: 24px; max-height: 94vh; }
+  .start-card h1 { font-size: 38px; margin-bottom: 14px; }
+  .start-card p { line-height: 1.45; margin-bottom: 10px; }
+  .enemy-legend { margin: 9px; }
+  .start-card > small { margin-top: 9px; }
+}
